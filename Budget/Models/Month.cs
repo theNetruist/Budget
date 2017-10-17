@@ -19,7 +19,7 @@ namespace Budget.Models
             for (var i = 1; i <= NumberOfDays; i++)
             {
                 var thisDay = new DateTime(date.Year, date.Month, i);
-                var thisDaysItems = items.Where(x => x.Date.Value.Date == thisDay.Date).ToList();
+                var thisDaysItems = items.Where(x => x.Date.Date == thisDay.Date).ToList();
                 Days.Add(new Day(thisDay, thisDaysItems));
             }
         }
@@ -44,11 +44,7 @@ namespace Budget.Models
         {
             get
             {
-                if (_date.Month == 2)
-                {
-                    return (_date.Year % 4 == 0 ? 29 : 28);
-                }
-                else return NumberOfDaysMap.GetValueOrDefault(_date.Month);
+                return DateTime.DaysInMonth(_date.Year, _date.Month);
             }
         }
         public double TotalValue
@@ -66,22 +62,6 @@ namespace Budget.Models
                 return total;
             }
         }
-
-        private static Dictionary<int, int> NumberOfDaysMap = new Dictionary<int, int>
-        {
-            { 1, 31 },
-            { 2, 28 },
-            { 3, 31 },
-            { 4, 30 },
-            { 5, 31 },
-            { 6, 30 },
-            { 7, 31 },
-            { 8, 31 },
-            { 9, 30 },
-            { 10, 31 },
-            { 11, 30 },
-            { 12, 31 },
-        };
 
         private static Dictionary<int, string> NameMap = new Dictionary<int, string>
         {

@@ -19,7 +19,25 @@ namespace Budget.Controllers
         {
             _budgetService = budgetService;
         }
-        
+
+        [HttpGet("line")]
+        public async Task<AbstractLineItem> GetLine(long id)
+        {
+            return await _budgetService.GetLineItemAsync(id);
+        }
+
+        [HttpPut("line")]
+        public async Task<LineItem> AddLine(LineItem item)
+        {
+            return await _budgetService.GetLineItemAsync(1);
+        }
+
+        [HttpDelete("line")]
+        public async Task<LineItem> DeleteLine(long id)
+        {
+            return await _budgetService.GetLineItemAsync(id);
+        }
+
         [HttpGet("day")]
         public async Task<Day> GetDay(DateTime date)
         {
@@ -30,6 +48,12 @@ namespace Budget.Controllers
         public async Task<Month> GetMonth(DateTime date)
         {
             return await _budgetService.GetMonthAsync(date);
+        }
+
+        [HttpGet("year")]
+        public async Task<List<Month>> GetYear(DateTime date)
+        {
+            return await _budgetService.GetYearsAsync(date);
         }
 
     }
