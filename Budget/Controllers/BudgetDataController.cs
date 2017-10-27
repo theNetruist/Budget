@@ -27,6 +27,12 @@ namespace Budget.Controllers
         }
 
         [HttpPut("line")]
+        public async Task<LineItem> EditLine(LineItem item)
+        {
+            return await _budgetService.GetLineItemAsync(1);
+        }
+
+        [HttpPost("line")]
         public async Task<LineItem> AddLine(LineItem item)
         {
             return await _budgetService.GetLineItemAsync(1);

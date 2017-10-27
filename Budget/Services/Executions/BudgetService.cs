@@ -14,6 +14,31 @@ namespace Budget.Services.Executions
             return MockBudgetData.LineItems.Where(x => x.Id == id).FirstOrDefault();
         }
 
+        public async Task<LineItem> AddLineItemAsync(LineItem item)
+        {
+            MockBudgetData.LineItems.Add(item);
+            return item;
+        }
+
+        public async Task<LineItem> EditLineItemAsync(LineItem item)
+        {
+            var xItem = MockBudgetData.LineItems.Where(x => x.Id == item.Id).FirstOrDefault();
+            xItem.Amount = item.Amount;
+            xItem.Date = item.Date;
+            xItem.Description = item.Description;
+            xItem.Expected = item.Expected;
+            xItem.Name = item.Name;
+            xItem.Notes = item.Notes;
+            return xItem;
+        }
+
+        public async Task<LineItem> DeleteLineItemAsync(long id)
+        {
+            var ret = await GetLineItemAsync(id);
+            MockBudgetData.LineItems.RemoveAll(x => x.Id == id);
+            return ret;
+        }
+
         public async Task<Day> GetDayAsync(DateTime date)
         {
             var items = MockBudgetData.LineItems;
@@ -76,17 +101,17 @@ namespace Budget.Services.Executions
                 {
                     MonthlyLineItems.Add(new MonthlyRepeatingLineItem
                     {
-                        Id = i,
+                        RID = i,
                         Description = $"Description for Monthly Recurring Line Item {i}.",
                         Name = $"Monthly Recurring Line Item {i}",
                         Notes = $"Notes for Monthly Recurring Line Item {i}.",
                         Amount = random.NextDouble() * 100,
-                        DayOfMonth = (int)Math.Round((random.NextDouble() * 31), 0)
+                        DayOfMonth = (int)Math.Round((random.NextDouble()  * 31), 0)
                     });
                 }
                 MonthlyLineItems.Add(new MonthlyRepeatingLineItem
                 {
-                    Id = 11,
+                    RID = 11,
                     Description = $"Description for Monthly Recurring Line Item 11.",
                     Name = $"Monthly Recurring Line Item 11",
                     Notes = $"Notes for Monthly Recurring Line Item 11.",
